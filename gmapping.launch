@@ -1,0 +1,43 @@
+<launch>
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <param name="base_frame" value="navtech" />
+    <param name="odom_frame" value="world" />        
+    <param name="map_frame" value="map" />
+
+  <!-- Adjust scan matching robustness -->
+    <param name="maxUrange" value="6.0" />       <!-- Max usable range (clip out long noise) -->
+    <param name="maxRange" value="6.0" />       <!-- Total scan range limit -->
+    <param name="minimumScore" value="5" />     <!-- Increase to accept fewer poor matches -->
+
+      <!-- Filtering scan noise -->
+    <param name="sigma" value="0.1" />          <!-- Laser noise (lower = trust scan less) -->
+    <param name="kernelSize" value="1" />        <!-- Smoothing kernel (try increasing if scans are jagged) -->
+
+      <!-- Increase robustness to false matches -->
+    <param name="srr" value="0.01" />            <!-- Odometry error (translation) -->
+    <param name="srt" value="0.02" />            <!-- Odometry error (rotation) -->
+    <param name="str" value="0.01" />
+    <param name="stt" value="0.02" />
+
+    <!-- Control map update behavior -->
+    <param name="linearUpdate" value="0.1" />    <!-- Distance before processing scan -->
+    <param name="angularUpdate" value="0.1" />   <!-- Angle before processing scan -->
+    <param name="temporalUpdate" value="1.0" />  <!-- Time before processing scan -->
+
+    <!-- Map size/resolution -->
+    <param name="delta" value="0.05" />          <!-- Grid resolution -->
+    <param name="particles" value="70" />        <!-- Reduce for speed, increase for better robustness -->
+
+    
+
+    <!-- Others -->
+    <param name="minimumScore" value="10" />    <!-- Raise to reject poor matches -->
+    <param name="resampleThreshold" value="0.5" /> <!-- Resample when particles diverge -->
+    <param name="map_update_interval" value="5.0" />
+    
+    <!-- Topic remapping if needed -->
+    <!-- <remap from="scan" to="/scan_filtered"/> -->
+
+  </node>
+</launch>
+
